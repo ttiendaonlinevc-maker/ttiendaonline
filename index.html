@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CamVic House — Domicilios</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+<div id="toast-container"></div>
+
+<!-- HEADER -->
+<header id="main-header">
+  <div class="header-top">
+    <div class="logo-area" onclick="goHome()">
+      <div id="logo-display">
+        <div class="logo-default">🍔</div>
+      </div>
+      <div class="store-name">
+        <span class="store-title">CamVic</span>
+        <span class="store-subtitle">House 🏠</span>
+      </div>
+    </div>
+    <div class="header-search">
+      <input type="text" id="search-input" placeholder="¿Qué quieres hoy? 🍕" oninput="filterProducts()" />
+      <i class="fas fa-search"></i>
+    </div>
+    <div class="header-actions">
+      <button class="btn-user" onclick="openUserModal()">
+        <i class="fas fa-user"></i>
+        <span id="user-label">Entrar</span>
+      </button>
+      <button class="btn-cart" onclick="openCart()">
+        <i class="fas fa-shopping-bag"></i>
+        <span class="cart-badge" id="cart-count">0</span>
+      </button>
+    </div>
+  </div>
+  <nav class="category-nav">
+    <button class="cat-btn active" data-cat="all" onclick="setCategory('all',this)"><i class="fas fa-th"></i> Todo</button>
+    <button class="cat-btn" data-cat="hamburguesas" onclick="setCategory('hamburguesas',this)"><i class="fas fa-hamburger"></i> Hamburguesas</button>
+    <button class="cat-btn" data-cat="pizzas" onclick="setCategory('pizzas',this)"><i class="fas fa-pizza-slice"></i> Pizzas</button>
+    <button class="cat-btn" data-cat="pollos" onclick="setCategory('pollos',this)"><i class="fas fa-drumstick-bite"></i> Pollos</button>
+    <button class="cat-btn" data-cat="perros" onclick="setCategory('perros',this)"><i class="fas fa-hotdog"></i> Perros</button>
+    <button class="cat-btn" data-cat="bebidas" onclick="setCategory('bebidas',this)"><i class="fas fa-glass-cheers"></i> Bebidas</button>
+    <button class="cat-btn" data-cat="postres" onclick="setCategory('postres',this)"><i class="fas fa-ice-cream"></i> Postres</button>
+    <button class="cat-btn" data-cat="combos" onclick="setCategory('combos',this)"><i class="fas fa-box-open"></i> Combos</button>
+    <button class="cat-btn" data-cat="otros" onclick="setCategory('otros',this)"><i class="fas fa-utensils"></i> Otros</button>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero-section">
+  <div class="hero-shapes">
+    <div class="shape s1"></div>
+    <div class="shape s2"></div>
+    <div class="shape s3"></div>
+  </div>
+  <div class="hero-content">
+    <p class="hero-tag">🛵 Domicilios rápidos</p>
+    <h1>¡La mejor comida,<br/><span>en tu puerta! 🍔</span></h1>
+    <p class="hero-sub">Hamburguesas, pizzas, pollos y más. Pide fácil por WhatsApp y recíbelo en casa.</p>
+    <div class="hero-btns">
+      <button class="hero-btn" onclick="scrollToCatalog()">Ver menú <i class="fas fa-arrow-down"></i></button>
+      <a class="hero-btn-wa" href="https://wa.me/573136918054?text=Hola!%20Quiero%20hacer%20un%20pedido." target="_blank">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+      </a>
+    </div>
+  </div>
+  <div class="hero-img-area">🍔🍕🍗</div>
+</section>
+
+<!-- BANNER INFO -->
+<div class="info-banner">
+  <div class="info-item"><i class="fas fa-bolt"></i><span>Entrega rápida</span></div>
+  <div class="info-item"><i class="fab fa-whatsapp"></i><span>Pide por WhatsApp</span></div>
+  <div class="info-item"><i class="fas fa-star"></i><span>Comida de calidad</span></div>
+  <div class="info-item"><i class="fas fa-map-marker-alt"></i><span>A tu domicilio</span></div>
+</div>
+
+<!-- CATALOG -->
+<main class="catalog-section" id="catalog">
+  <div class="section-header">
+    <h2 id="catalog-title">🍽️ Nuestro Menú</h2>
+    <span id="product-count" class="prod-count"></span>
+  </div>
+  <div class="products-grid" id="products-grid"></div>
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <i class="fas fa-search"></i>
+    <p>No se encontraron productos</p>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">🍔 CamVic House</div>
+      <p>Los mejores domicilios de comida rápida. Pide fácil, come rico y recíbelo en tu puerta.</p>
+      <div class="social-links" id="social-links"></div>
+    </div>
+    <div class="footer-links">
+      <h4>Menú</h4>
+      <ul>
+        <li><a href="#" onclick="setCategory('hamburguesas');return false;">Hamburguesas</a></li>
+        <li><a href="#" onclick="setCategory('pizzas');return false;">Pizzas</a></li>
+        <li><a href="#" onclick="setCategory('pollos');return false;">Pollos</a></li>
+        <li><a href="#" onclick="setCategory('bebidas');return false;">Bebidas</a></li>
+        <li><a href="#" onclick="setCategory('combos');return false;">Combos</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <h4>Contacto</h4>
+      <p><i class="fab fa-whatsapp"></i> 3136918054</p>
+      <p><i class="fas fa-clock"></i> Horario: según disponibilidad</p>
+      <p><i class="fas fa-motorcycle"></i> Domicilios disponibles</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 CamVic House — Todos los derechos reservados</p>
+    <a href="admin.html" class="admin-link"><i class="fas fa-lock"></i> Admin</a>
+  </div>
+</footer>
+
+<!-- PRODUCT DETAIL MODAL -->
+<div class="modal-overlay" id="product-modal" onclick="closeProductModal(event)">
+  <div class="modal-box product-detail-box">
+    <button class="modal-close" onclick="closeProductModal()"><i class="fas fa-times"></i></button>
+    <div class="product-detail-grid">
+      <div class="product-detail-img">
+        <img id="modal-img" src="" alt="" />
+        <span class="modal-category-badge" id="modal-category"></span>
+      </div>
+      <div class="product-detail-info">
+        <h2 id="modal-name"></h2>
+        <p class="modal-price" id="modal-price"></p>
+        <p class="modal-desc" id="modal-desc"></p>
+        <div class="stock-info" id="modal-stock"></div>
+        <div class="form-row" style="margin-top:8px;">
+          <label style="font-size:.82rem;font-weight:700;color:var(--text-light);">¿Alguna nota? (sin cebolla, extra salsa, etc.)</label>
+          <textarea id="modal-notes" rows="2" placeholder="Ej: sin cebolla, extra salsa picante..." style="padding:8px 12px;border:2px solid var(--border);border-radius:8px;font-family:var(--font);font-size:.85rem;width:100%;resize:none;outline:none;"></textarea>
+        </div>
+        <div class="qty-row">
+          <label>Cantidad:</label>
+          <div class="qty-control">
+            <button onclick="changeQty(-1)">−</button>
+            <span id="modal-qty">1</span>
+            <button onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+        <button class="btn-add-cart" onclick="addToCartFromModal()"><i class="fas fa-plus-circle"></i> Agregar al pedido</button>
+        <button class="btn-wa-direct" onclick="buyDirectWhatsApp()"><i class="fab fa-whatsapp"></i> Pedir solo este</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CART MODAL -->
+<div class="modal-overlay" id="cart-modal" onclick="closeCart(event)">
+  <div class="modal-box cart-box">
+    <div class="cart-header">
+      <h2><i class="fas fa-shopping-bag"></i> Mi Pedido</h2>
+      <button class="modal-close" onclick="closeCart()"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="cart-items-list"></div>
+    <div class="cart-footer" id="cart-footer">
+      <div class="cart-total"><span>Subtotal:</span><strong id="cart-total-amount">$0</strong></div>
+      <div class="domicilio-note">
+        <i class="fas fa-motorcycle"></i>
+        <span>El costo del domicilio será informado por WhatsApp según tu ubicación.</span>
+      </div>
+      <button class="btn-checkout" onclick="openCheckout()"><i class="fas fa-motorcycle"></i> Pedir a domicilio</button>
+      <button class="btn-clear-cart" onclick="clearCart()"><i class="fas fa-trash"></i> Vaciar pedido</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkout-modal" onclick="closeCheckout(event)">
+  <div class="modal-box checkout-box">
+    <div class="cart-header">
+      <h2><i class="fas fa-motorcycle"></i> Datos del domicilio</h2>
+      <button class="modal-close" onclick="closeCheckout()"><i class="fas fa-times"></i></button>
+    </div>
+    <form id="checkout-form" onsubmit="submitOrder(event)">
+      <div class="form-row">
+        <label>Nombre completo *</label>
+        <input type="text" id="f-name" placeholder="¿A nombre de quién?" required />
+      </div>
+      <div class="form-row">
+        <label>Dirección de entrega *</label>
+        <input type="text" id="f-address" placeholder="Calle, carrera, barrio..." required />
+      </div>
+      <div class="form-grid">
+        <div class="form-row">
+          <label>Barrio / Ciudad *</label>
+          <input type="text" id="f-city" placeholder="Barrio o ciudad" required />
+        </div>
+        <div class="form-row">
+          <label>Teléfono de contacto *</label>
+          <input type="tel" id="f-phone" placeholder="Número de contacto" required />
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Punto de referencia</label>
+        <input type="text" id="f-reference" placeholder="Cerca de, frente a, al lado de..." />
+      </div>
+      <div class="form-row">
+        <label>Correo electrónico (opcional)</label>
+        <input type="email" id="f-email" placeholder="correo@email.com" />
+      </div>
+      <div class="form-row">
+        <label>Instrucciones adicionales</label>
+        <textarea id="f-notes" rows="3" placeholder="Indicaciones especiales para el domiciliario, forma de pago, etc."></textarea>
+      </div>
+      <div class="pago-section">
+        <label class="pago-label"><i class="fas fa-money-bill-wave"></i> Forma de pago</label>
+        <div class="pago-options">
+          <label class="pago-opt"><input type="radio" name="pago" value="Efectivo" checked /> 💵 Efectivo</label>
+          <label class="pago-opt"><input type="radio" name="pago" value="Nequi" /> 📱 Nequi</label>
+          <label class="pago-opt"><input type="radio" name="pago" value="Daviplata" /> 💳 Daviplata</label>
+          <label class="pago-opt"><input type="radio" name="pago" value="Transferencia" /> 🏦 Transferencia</label>
+        </div>
+      </div>
+      <div class="checkout-summary" id="checkout-summary"></div>
+      <button type="submit" class="btn-wa-order"><i class="fab fa-whatsapp"></i> Confirmar pedido por WhatsApp</button>
+    </form>
+  </div>
+</div>
+
+<!-- USER MODAL -->
+<div class="modal-overlay" id="user-modal" onclick="closeUserModal(event)">
+  <div class="modal-box user-box">
+    <button class="modal-close" onclick="closeUserModal()"><i class="fas fa-times"></i></button>
+    <div class="user-tabs">
+      <button class="utab active" id="tab-login" onclick="switchUserTab('login')">Iniciar sesión</button>
+      <button class="utab" id="tab-register" onclick="switchUserTab('register')">Registrarse</button>
+    </div>
+    <div id="login-form-section">
+      <h3>¡Bienvenido! 👋</h3>
+      <div class="form-row"><label>Usuario o Correo</label><input type="text" id="login-user" placeholder="usuario o correo" /></div>
+      <div class="form-row"><label>Contraseña</label><input type="password" id="login-pass" placeholder="contraseña" /></div>
+      <button class="btn-primary-full" onclick="doLogin()">Entrar</button>
+    </div>
+    <div id="register-form-section" style="display:none;">
+      <h3>Crear cuenta 🍔</h3>
+      <div class="form-row"><label>Nombre completo</label><input type="text" id="reg-name" placeholder="Tu nombre" /></div>
+      <div class="form-row"><label>Usuario</label><input type="text" id="reg-user" placeholder="nombre de usuario" /></div>
+      <div class="form-row"><label>Correo</label><input type="email" id="reg-email" placeholder="correo@email.com" /></div>
+      <div class="form-row"><label>Contraseña</label><input type="password" id="reg-pass" placeholder="mínimo 6 caracteres" /></div>
+      <button class="btn-primary-full" onclick="doRegister()">Crear cuenta</button>
+    </div>
+    <div id="logged-section" style="display:none;">
+      <div class="logged-avatar"><i class="fas fa-user-circle"></i></div>
+      <h3 id="logged-name">Hola!</h3>
+      <p id="logged-email-display" style="color:var(--gray);font-size:.85rem;text-align:center;"></p>
+      <button class="btn-primary-full" onclick="doLogout()">Cerrar sesión</button>
+    </div>
+  </div>
+</div>
+
+<!-- WhatsApp FAB -->
+<a class="whatsapp-fab" href="https://wa.me/573136918054?text=Hola!%20Quiero%20hacer%20un%20pedido." target="_blank">
+  <span class="wa-tooltip">🛵 ¡Haz tu pedido!</span>
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
