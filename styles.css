@@ -66,9 +66,20 @@ img{max-width:100%;display:block}
 /* CATEGORY NAV */
 .category-nav{display:flex;gap:6px;padding:8px 24px;overflow-x:auto;border-top:1px solid var(--border);scrollbar-width:none}
 .category-nav::-webkit-scrollbar{display:none}
-.cat-btn{display:flex;align-items:center;gap:6px;padding:7px 16px;border:2px solid var(--border);border-radius:50px;background:transparent;color:var(--text-light);cursor:pointer;font-family:var(--font);font-size:.82rem;font-weight:700;white-space:nowrap;transition:all .2s;flex-shrink:0}
-.cat-btn:hover{border-color:var(--primary);color:var(--primary)}
-.cat-btn.active{background:var(--primary);border-color:var(--primary);color:var(--white)}
+.cat-btn{display:flex;align-items:center;gap:6px;padding:8px 18px;border:2px solid transparent;border-radius:50px;cursor:pointer;font-family:var(--font);font-size:.82rem;font-weight:800;white-space:nowrap;transition:all .2s;flex-shrink:0;color:#fff}
+.cat-btn:hover{transform:scale(1.05);box-shadow:0 4px 14px rgba(0,0,0,.18)}
+
+/* Colores por categoría */
+.cat-all        {background:#555e7b}
+.cat-hambur     {background:#e63946}
+.cat-perros     {background:#e07b39}
+.cat-bebidas    {background:#2196f3}
+.cat-combos     {background:#8e44ad}
+.cat-salchi     {background:#f4a01c}
+.cat-otros      {background:#2e7d5e}
+
+/* Estado activo — borde blanco brillante */
+.cat-btn.active{box-shadow:0 0 0 3px rgba(255,255,255,.6) inset, 0 4px 16px rgba(0,0,0,.25);filter:brightness(1.12)}
 
 /* HERO */
 .hero{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);color:var(--white);padding:60px 24px;position:relative;overflow:hidden;min-height:320px;display:flex;align-items:center;gap:40px;max-width:100%}
@@ -319,7 +330,7 @@ footer{background:var(--secondary);color:#ccc;margin-top:60px}
 .loader-spinner{width:50px;height:50px;border:5px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* RESPONSIVE */
+/* RESPONSIVE — TABLET (max 900px) */
 @media(max-width:900px){
   .product-detail-grid{grid-template-columns:1fr}
   .product-detail-img{border-radius:20px 20px 0 0;aspect-ratio:4/3}
@@ -330,26 +341,46 @@ footer{background:var(--secondary);color:#ccc;margin-top:60px}
   .admin-main{margin-left:0}
   .hero{flex-direction:column;gap:10px;padding:40px 20px}
   .hero-img-area{font-size:3rem}
+  .products-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+  .cat-btn{padding:7px 14px;font-size:.78rem}
 }
+
+/* RESPONSIVE — MÓVIL (max 640px) */
 @media(max-width:640px){
   .header-top{padding:10px 12px;gap:8px}
-  .logo-img{height:52px;max-width:110px}
   #logo-display img{height:52px;max-width:110px}
+  .logo-img{height:52px;max-width:110px}
   .store-name{display:none}
-  .header-search{max-width:100%}
+  .header-search{flex:1;max-width:100%}
+  .header-search input{font-size:.82rem;padding:8px 36px 8px 14px}
   .btn-user span{display:none}
-  .btn-user{padding:10px 13px}
-  .hero{padding:36px 16px}
-  .catalog-section{padding:24px 14px}
-  .products-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+  .btn-user{padding:9px 12px}
+  .btn-cart{padding:9px 14px}
+  .category-nav{padding:8px 12px;gap:5px}
+  .cat-btn{padding:6px 12px;font-size:.75rem;gap:4px}
+  .hero{padding:28px 14px;min-height:auto}
+  .hero h1{font-size:1.8rem}
+  .hero-sub{font-size:.88rem}
+  .catalog-section{padding:20px 12px}
+  .section-header h2{font-size:1.4rem}
+  .products-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .product-card{border-radius:12px}
+  .product-img-wrap{aspect-ratio:1/1}
+  .product-info{padding:10px}
+  .product-name{font-size:.9rem}
+  .product-price{font-size:1rem}
   .form-grid{grid-template-columns:1fr}
-  .footer-inner{grid-template-columns:1fr;gap:24px}
+  .footer-inner{grid-template-columns:1fr;gap:20px}
   .footer-bottom{flex-direction:column;gap:8px;text-align:center}
-  .whatsapp-fab{bottom:18px;right:18px;width:50px;height:50px;font-size:1.5rem}
+  .whatsapp-fab{bottom:16px;right:16px;width:52px;height:52px;font-size:1.5rem}
   .settings-grid{grid-template-columns:1fr}
   .stats-grid{grid-template-columns:1fr 1fr}
   #admin-products-list{grid-template-columns:1fr}
-  .info-banner{gap:16px;padding:10px 16px}
+  .info-banner{gap:12px;padding:10px 14px;font-size:.82rem}
   .pago-options{gap:6px}
+  .modal-box{margin:10px;border-radius:16px;max-height:95vh}
+  .product-detail-grid{gap:0}
+  .cart-items-list{max-height:45vh}
+}
   .pago-opt{font-size:.78rem;padding:6px 10px}
 }
