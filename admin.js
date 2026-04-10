@@ -18,20 +18,39 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db  = getFirestore(app);
 
-const DEFAULT_ADMIN = { user: 'admin', pass: 'admin123' };
+const DEFAULT_ADMIN = { user: 'admin', pass: 'Admin2026A**' };
 let adminProducts = [];
+let currentCreds = { ...DEFAULT_ADMIN };
 
-document.addEventListener('DOMContentLoaded', () => {
-  if (!localStorage.getItem('cv_admin_creds')) localStorage.setItem('cv_admin_creds', JSON.stringify(DEFAULT_ADMIN));
+document.addEventListener('DOMContentLoaded', async () => {
+  // Cargar credenciales desde Firebase (fuente de verdad global)
+  await loadCredsFromFirebase();
   if (localStorage.getItem('cv_admin_session') === 'active') showAdminPanel();
 });
 
+async function loadCredsFromFirebase() {
+  try {
+    const snap = await getDoc(doc(db, 'settings', 'adminCreds'));
+    if (snap.exists()) {
+      currentCreds = snap.data();
+    } else {
+      // Primera vez: guardar las credenciales por defecto en Firebase
+      await setDoc(doc(db, 'settings', 'adminCreds'), DEFAULT_ADMIN);
+      currentCreds = { ...DEFAULT_ADMIN };
+    }
+  } catch(e) {
+    // Sin conexión: usar default
+    currentCreds = { ...DEFAULT_ADMIN };
+  }
+}
+
 // ── LOGIN ──
-window.adminLogin = function() {
-  const user  = document.getElementById('adm-user').value.trim();
-  const pass  = document.getElementById('adm-pass').value;
-  const creds = JSON.parse(localStorage.getItem('cv_admin_creds') || '{}');
-  if (user === (creds.user||DEFAULT_ADMIN.user) && pass === (creds.pass||DEFAULT_ADMIN.pass)) {
+window.adminLogin = async function() {
+  const user = document.getElementById('adm-user').value.trim();
+  const pass = document.getElementById('adm-pass').value;
+  // Recargar credenciales frescas de Firebase antes de validar
+  await loadCredsFromFirebase();
+  if (user === currentCreds.user && pass === currentCreds.pass) {
     localStorage.setItem('cv_admin_session', 'active'); showAdminPanel();
   } else { showToast('Credenciales incorrectas', 'error'); }
 };
@@ -422,17 +441,24 @@ window.saveStoreInfo = function() {
   showToast('Información guardada ✅', 'success');
 };
 
-window.changeAdminPass = function() {
-  const oldp  = document.getElementById('s-oldpass').value;
-  const newp  = document.getElementById('s-newpass').value;
-  const conf  = document.getElementById('s-confpass').value;
-  const creds = JSON.parse(localStorage.getItem('cv_admin_creds') || '{}');
-  if (oldp !== (creds.pass || DEFAULT_ADMIN.pass)) { showToast('Contraseña actual incorrecta', 'error'); return; }
+window.changeAdminPass = async function() {
+  const oldp = document.getElementById('s-oldpass').value;
+  const newp = document.getElementById('s-newpass').value;
+  const conf = document.getElementById('s-confpass').value;
+  // Recargar credenciales frescas antes de validar
+  await loadCredsFromFirebase();
+  if (oldp !== currentCreds.pass) { showToast('Contraseña actual incorrecta', 'error'); return; }
   if (newp.length < 6) { showToast('Mínimo 6 caracteres', 'error'); return; }
   if (newp !== conf) { showToast('Las contraseñas no coinciden', 'error'); return; }
-  creds.pass = newp; localStorage.setItem('cv_admin_creds', JSON.stringify(creds));
-  ['s-oldpass','s-newpass','s-confpass'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
-  showToast('Contraseña cambiada ✅', 'success');
+  try {
+    const newCreds = { user: currentCreds.user, pass: newp };
+    await setDoc(doc(db, 'settings', 'adminCreds'), newCreds);
+    currentCreds = newCreds;
+    ['s-oldpass','s-newpass','s-confpass'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+    showToast('✅ Contraseña cambiada — aplicada en todos los dispositivos', 'success');
+  } catch(e) {
+    showToast('Error al guardar en Firebase: ' + e.message, 'error');
+  }
 };
 
 // ── MODALES ──
