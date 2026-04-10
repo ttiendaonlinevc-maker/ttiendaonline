@@ -108,17 +108,32 @@ async function saveProductToFirebase(product) {
 async function loadLogoDisplay() {
   const el = document.getElementById('logo-display');
   if (!el) return;
-  el.innerHTML = '<div class="logo-default">🍔</div>';
+
+  // Default fallback text
+  el.innerHTML = `<span style="font-family:'Fredoka One',sans-serif;font-size:1.4rem;color:var(--primary);">CamVic House</span>`;
+
+  let logoUrl = '';
+
+  // Try Firebase first
   try {
     const snap = await getDoc(doc(db, 'settings', 'logo'));
     if (snap.exists() && snap.data().url) {
-      const url = snap.data().url;
-      el.innerHTML = `<img src="${url}" alt="Logo" style="height:48px;width:48px;object-fit:contain;border-radius:50%;" />`;
-      localStorage.setItem('cv_logo', url);
+      logoUrl = snap.data().url;
+      localStorage.setItem('cv_logo', logoUrl);
     }
-  } catch(e) {
-    const url = localStorage.getItem('cv_logo');
-    if (url) el.innerHTML = `<img src="${url}" alt="Logo" style="height:48px;width:48px;object-fit:contain;border-radius:50%;" />`;
+  } catch(e) {}
+
+  // Fallback to localStorage
+  if (!logoUrl) logoUrl = localStorage.getItem('cv_logo') || '';
+
+  if (logoUrl) {
+    el.innerHTML = `<img src="${logoUrl}" alt="CamVic House"
+      style="height:70px;width:auto;max-width:170px;object-fit:contain;display:block;border-radius:10px;"
+      onerror="this.parentElement.innerHTML='<span style=\\'font-family:\\'Fredoka One\\',sans-serif;font-size:1.4rem;color:#c10000;\\'>CamVic House</span>'" />`;
+
+    // Update footer logo too
+    const footer = document.getElementById('footer-logo-area');
+    if (footer) footer.innerHTML = `<img src="${logoUrl}" alt="CamVic House" style="height:36px;width:auto;object-fit:contain;vertical-align:middle;margin-right:8px;border-radius:6px;"> CamVic House`;
   }
 }
 
