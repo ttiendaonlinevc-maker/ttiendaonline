@@ -46,14 +46,23 @@ const defaultProducts = [
 // ── INICIO ──
 document.addEventListener('DOMContentLoaded', async () => {
   showLoading(true);
-  await loadProductsFromFirebase();
-  showLoading(false);
+  try {
+    await Promise.race([
+      loadProductsFromFirebase(),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000))
+    ]);
+  } catch(e) {
+    console.warn('Firebase no disponible, usando productos locales:', e.message);
+    products = defaultProducts;
+  } finally {
+    showLoading(false);
+  }
   const cartStored = localStorage.getItem('cv_cart');
   cart = cartStored ? JSON.parse(cartStored) : [];
   renderProducts();
   updateCartBadge();
-  await loadSocialLinks();
-  await loadLogoDisplay();
+  try { await loadSocialLinks(); } catch(e) {}
+  try { await loadLogoDisplay(); } catch(e) {}
   checkUserSession();
 });
 

@@ -87,9 +87,13 @@
           <h3><i class="fas fa-image"></i> Logo de la tienda</h3>
           <div class="logo-preview" id="logo-preview-admin"></div>
           <div class="form-row" style="margin-top:10px;">
-            <label>URL del logo (desde imgbb.com)</label>
+            <label>Logo de la tienda</label>
+            <label id="imgbb-logo-btn" style="display:inline-flex;align-items:center;gap:6px;background:var(--primary);color:#fff;padding:9px 18px;border-radius:10px;cursor:pointer;font-weight:700;font-size:.88rem;margin-bottom:8px;">
+              <i class="fas fa-upload"></i> Subir logo
+              <input type="file" accept="image/*" style="display:none;" onchange="uploadLogoImgBB(this)" />
+            </label>
+            <span style="color:var(--gray);font-size:.8rem;display:block;margin-bottom:6px;">— o pega una URL manualmente —</span>
             <input type="url" id="s-logourl" placeholder="https://i.ibb.co/xxxx/logo.png" oninput="previewLogoUrl(this.value)" />
-            <small style="color:var(--gray);font-size:.75rem;margin-top:4px;display:block;">📸 imgbb.com → sube foto → copia "Direct link"</small>
           </div>
           <button class="btn-primary-full" onclick="saveLogoFromUrl()" style="margin-top:6px;"><i class="fas fa-save"></i> Guardar logo</button>
           <button class="btn-danger-sm" onclick="removeLogo()">Quitar logo</button>
@@ -158,9 +162,18 @@
       </div>
       <div class="form-row"><label>Descripción del producto</label><textarea id="pf-desc" rows="3" placeholder="Ingredientes, tamaño, acompañamientos..."></textarea></div>
       <div class="form-row">
-        <label>Imagen (URL de imgbb.com) *</label>
-        <input type="url" id="pf-imgurl" placeholder="https://i.ibb.co/xxxx/imagen.jpg" oninput="previewImgUrl(this.value)" />
-        <small style="color:var(--gray);font-size:.75rem;margin-top:4px;display:block;">📸 imgbb.com → sube foto → copia "Direct link" → pega aquí</small>
+        <label>Imagen del producto *</label>
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px;">
+          <label id="imgbb-upload-btn" style="display:inline-flex;align-items:center;gap:6px;background:var(--primary);color:#fff;padding:9px 18px;border-radius:10px;cursor:pointer;font-weight:700;font-size:.88rem;transition:opacity .2s;">
+            <i class="fas fa-upload"></i> Subir foto
+            <input type="file" accept="image/*" style="display:none;" onchange="uploadImageImgBB(this)" />
+          </label>
+          <span style="color:var(--gray);font-size:.8rem;">— o pega una URL —</span>
+        </div>
+        <div id="imgbb-progress" style="display:none;background:var(--gray-light);border-radius:8px;padding:8px 12px;font-size:.82rem;color:var(--primary);margin-bottom:6px;">
+          <i class="fas fa-spinner fa-spin"></i> Subiendo imagen a ImgBB...
+        </div>
+        <input type="url" id="pf-imgurl" placeholder="https://i.ibb.co/xxxx/imagen.jpg" oninput="previewImgUrl(this.value)" style="margin-top:4px;" />
         <div class="img-preview-box"><img id="pf-img-preview" src="" alt="" style="display:none;" /></div>
       </div>
       <div class="form-row" style="background:var(--gray-light);padding:14px;border-radius:10px;gap:10px;">

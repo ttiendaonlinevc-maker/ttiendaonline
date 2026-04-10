@@ -174,6 +174,71 @@ window.deleteProduct = async function(id) {
   } catch(e) { showToast('Error eliminando', 'error'); }
 };
 
+
+// ── IMGBB UPLOAD ──
+const IMGBB_API_KEY = '5b8f761d3197f50a909ebe8d224dada7';
+
+window.uploadImageImgBB = async function(inputEl) {
+  const file = inputEl.files[0];
+  if (!file) return;
+  const btn = document.getElementById('imgbb-upload-btn');
+  const progress = document.getElementById('imgbb-progress');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subiendo...'; }
+  if (progress) progress.style.display = 'block';
+  try {
+    const formData = new FormData();
+    formData.append('image', file);
+    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    if (data.success) {
+      const url = data.data.url;
+      document.getElementById('pf-imgurl').value = url;
+      window.previewImgUrl(url);
+      showToast('✅ Imagen subida correctamente', 'success');
+    } else {
+      showToast('Error al subir imagen: ' + (data.error?.message || 'desconocido'), 'error');
+    }
+  } catch(e) {
+    showToast('Error de conexión con ImgBB', 'error');
+  } finally {
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-upload"></i> Subir foto'; }
+    if (progress) progress.style.display = 'none';
+    inputEl.value = '';
+  }
+};
+
+window.uploadLogoImgBB = async function(inputEl) {
+  const file = inputEl.files[0];
+  if (!file) return;
+  const btn = document.getElementById('imgbb-logo-btn');
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subiendo...'; }
+  try {
+    const formData = new FormData();
+    formData.append('image', file);
+    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+      method: 'POST',
+      body: formData
+    });
+    const data = await res.json();
+    if (data.success) {
+      const url = data.data.url;
+      document.getElementById('s-logourl').value = url;
+      window.previewLogoUrl(url);
+      showToast('✅ Logo listo, haz clic en Guardar Logo', 'success');
+    } else {
+      showToast('Error al subir logo: ' + (data.error?.message || 'desconocido'), 'error');
+    }
+  } catch(e) {
+    showToast('Error de conexión con ImgBB', 'error');
+  } finally {
+    if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fas fa-upload"></i> Subir logo'; }
+    inputEl.value = '';
+  }
+};
+
 window.previewImgUrl = function(url) {
   const preview = document.getElementById('pf-img-preview');
   if (!preview) return;
