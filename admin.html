@@ -41,6 +41,16 @@
     <button class="sidebar-logout" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> Salir</button>
   </aside>
 
+  <!-- BARRA INFERIOR MÓVIL -->
+  <nav class="admin-bottom-nav">
+    <button class="abn-btn active" onclick="adminTabMobile('dashboard',this)"><i class="fas fa-chart-line"></i><span>Dashboard</span></button>
+    <button class="abn-btn" onclick="adminTabMobile('products',this)"><i class="fas fa-utensils"></i><span>Menú</span></button>
+    <button class="abn-btn" onclick="adminTabMobile('orders',this)"><i class="fas fa-motorcycle"></i><span>Pedidos</span></button>
+    <button class="abn-btn" onclick="adminTabMobile('users',this)"><i class="fas fa-users"></i><span>Usuarios</span></button>
+    <button class="abn-btn" onclick="adminTabMobile('settings',this)"><i class="fas fa-cog"></i><span>Ajustes</span></button>
+    <button class="abn-btn abn-logout" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i><span>Salir</span></button>
+  </nav>
+
   <main class="admin-main">
     <div class="admin-topbar">
       <h1 id="admin-page-title">Dashboard</h1>
@@ -141,14 +151,11 @@
           <select id="pf-category" required>
             <option value="">Seleccionar...</option>
             <option value="hamburguesas">🍔 Hamburguesas</option>
-            <option value="pizzas">🍕 Pizzas</option>
-            <option value="pollos">🍗 Pollos</option>
-            <option value="perros">🌭 Perros Calientes</option>
             <option value="bebidas">🥤 Bebidas</option>
-            <option value="postres">🍦 Postres</option>
+            <option value="perros">🌭 Perros Calientes</option>
             <option value="combos">📦 Combos</option>
             <option value="salchipapas">🍟 Salchipapas</option>
-            <option value="otros">🍟 Otros</option>
+            <option value="otros">🍴 Otros</option>
           </select>
         </div>
       </div>

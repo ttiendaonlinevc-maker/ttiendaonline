@@ -62,12 +62,31 @@ async function loadAdminProducts() {
 window.adminTab = function(name, btn) {
   document.querySelectorAll('.admin-tab').forEach(t => { t.style.display = 'none'; t.classList.remove('active'); });
   document.querySelectorAll('.snav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.abn-btn').forEach(b => b.classList.remove('active'));
   const tab = document.getElementById(`tab-${name}`);
   if (tab) { tab.style.display = 'block'; tab.classList.add('active'); }
   if (btn) btn.classList.add('active');
+  // Sync bottom nav
+  document.querySelectorAll(`.abn-btn`).forEach(b => { if(b.getAttribute('onclick')?.includes(`'${name}'`)) b.classList.add('active'); });
   const titles = { dashboard:'Dashboard', products:'Menú / Productos', orders:'Pedidos', users:'Usuarios', settings:'Ajustes' };
   const el = document.getElementById('admin-page-title');
   if (el) el.textContent = titles[name] || name;
+};
+
+window.adminTabMobile = function(name, btn) {
+  document.querySelectorAll('.admin-tab').forEach(t => { t.style.display = 'none'; t.classList.remove('active'); });
+  document.querySelectorAll('.snav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.abn-btn').forEach(b => b.classList.remove('active'));
+  const tab = document.getElementById(`tab-${name}`);
+  if (tab) { tab.style.display = 'block'; tab.classList.add('active'); }
+  if (btn) btn.classList.add('active');
+  // Sync sidebar
+  document.querySelectorAll(`.snav-btn`).forEach(b => { if(b.getAttribute('onclick')?.includes(`'${name}'`)) b.classList.add('active'); });
+  const titles = { dashboard:'Dashboard', products:'Menú / Productos', orders:'Pedidos', users:'Usuarios', settings:'Ajustes' };
+  const el = document.getElementById('admin-page-title');
+  if (el) el.textContent = titles[name] || name;
+  // Scroll to top on mobile
+  window.scrollTo({top:0, behavior:'smooth'});
 };
 
 function renderDashboard() {
