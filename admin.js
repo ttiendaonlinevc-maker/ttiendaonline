@@ -336,6 +336,19 @@ async function loadSettingsForm() {
   if (document.getElementById('s-storename')) document.getElementById('s-storename').value = info.name  || 'CamVic House';
   if (document.getElementById('s-storedesc')) document.getElementById('s-storedesc').value = info.desc  || '';
   if (document.getElementById('s-email'))     document.getElementById('s-email').value     = info.email || '';
+
+  // Cargar horario
+  try {
+    const schSnap = await getDoc(doc(db, 'settings', 'schedule'));
+    const sch = schSnap.exists() ? schSnap.data() : JSON.parse(localStorage.getItem('cv_schedule') || '{}');
+    if (document.getElementById('s-schedule')) document.getElementById('s-schedule').value = sch.text || '';
+    if (sch.status === 'cerrado') { const el = document.getElementById('s-closed'); if(el) el.checked = true; }
+    else { const el = document.getElementById('s-open'); if(el) el.checked = true; }
+  } catch(e) {
+    const sch = JSON.parse(localStorage.getItem('cv_schedule') || '{}');
+    if (document.getElementById('s-schedule')) document.getElementById('s-schedule').value = sch.text || '';
+  }
+
   loadLogoPreviewAdmin();
 }
 
@@ -344,6 +357,20 @@ window.previewLogoUrl = function(url) {
   if (!el) return;
   if (url) el.innerHTML = `<img src="${url}" alt="Logo" style="max-height:70px;" />`;
   else loadLogoPreviewAdmin();
+};
+
+window.saveSchedule = async function() {
+  const text   = document.getElementById('s-schedule')?.value.trim();
+  const status = document.querySelector('input[name="s-status"]:checked')?.value || 'abierto';
+  if (!text) { showToast('Escribe el horario primero', 'error'); return; }
+  try {
+    await setDoc(doc(db, 'settings', 'schedule'), { text, status });
+    localStorage.setItem('cv_schedule', JSON.stringify({ text, status }));
+    showToast('✅ Horario guardado — visible para todos', 'success');
+  } catch(e) {
+    localStorage.setItem('cv_schedule', JSON.stringify({ text, status }));
+    showToast('✅ Horario guardado localmente', 'success');
+  }
 };
 
 window.saveLogoFromUrl = async function() {

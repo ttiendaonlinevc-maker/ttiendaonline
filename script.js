@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateCartBadge();
   try { await loadSocialLinks(); } catch(e) {}
   try { await loadLogoDisplay(); } catch(e) {}
+  try { await loadSchedule(); } catch(e) {}
   checkUserSession();
 });
 
@@ -105,6 +106,28 @@ async function saveProductToFirebase(product) {
 }
 
 // ── LOGO Y REDES DESDE FIREBASE ──
+async function loadSchedule() {
+  let sch = {};
+  try {
+    const snap = await getDoc(doc(db, 'settings', 'schedule'));
+    if (snap.exists()) { sch = snap.data(); localStorage.setItem('cv_schedule', JSON.stringify(sch)); }
+    else { sch = JSON.parse(localStorage.getItem('cv_schedule') || '{}'); }
+  } catch(e) {
+    sch = JSON.parse(localStorage.getItem('cv_schedule') || '{}');
+  }
+  if (!sch.text) return;
+  const banner = document.getElementById('schedule-banner');
+  const bannerText = document.getElementById('schedule-text');
+  const footerSch = document.getElementById('footer-schedule');
+  if (banner && bannerText) {
+    const isOpen = sch.status !== 'cerrado';
+    banner.className = `schedule-banner ${isOpen ? 'abierto' : 'cerrado'}`;
+    banner.style.display = 'flex';
+    bannerText.textContent = isOpen ? `🟢 Abierto · ${sch.text}` : `🔴 Cerrado · ${sch.text}`;
+  }
+  if (footerSch) footerSch.textContent = sch.text;
+}
+
 async function loadLogoDisplay() {
   const el = document.getElementById('logo-display');
   if (!el) return;

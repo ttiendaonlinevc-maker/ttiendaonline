@@ -3,7 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CamVic House — Domicilios</title>
+  <title>CamVic House — Domicilios de Comida Rápida</title>
+
+  <!-- SEO -->
+  <meta name="description" content="CamVic House — Los mejores perros calientes, salchipapas, hamburguesas y más. Pide a domicilio fácil por WhatsApp. ¡Rápido, rico y con amor!" />
+  <meta name="keywords" content="domicilios, comida rápida, perros calientes, salchipapas, hamburguesas, CamVic House" />
+  <meta name="author" content="CamVic House" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph (WhatsApp, Facebook, Instagram) -->
+  <meta property="og:title" content="CamVic House — Domicilios de Comida Rápida" />
+  <meta property="og:description" content="Perros calientes, salchipapas, hamburguesas y más. Pide fácil por WhatsApp. ¡Rápido, rico y con amor! 🛵" />
+  <meta property="og:image" content="https://i.ibb.co/Jw0YWTSx/Whats-App-Image-2026-04-09-at-10-45-05-PM.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_CO" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CamVic House — Domicilios" />
+  <meta name="twitter:description" content="Perros calientes, salchipapas, hamburguesas y más. 🛵 ¡Pide ya!" />
+  <meta name="twitter:image" content="https://i.ibb.co/Jw0YWTSx/Whats-App-Image-2026-04-09-at-10-45-05-PM.jpg" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="logo.jpg" />
+  <link rel="apple-touch-icon" href="logo.jpg" />
+
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -11,6 +35,12 @@
 <body>
 
 <div id="toast-container"></div>
+
+<!-- HORARIO BANNER -->
+<div class="schedule-banner" id="schedule-banner" style="display:none;">
+  <i class="fas fa-clock"></i>
+  <span id="schedule-text"></span>
+</div>
 
 <!-- HEADER -->
 <header id="main-header">
@@ -55,8 +85,8 @@
   </div>
   <div class="hero-content">
     <p class="hero-tag">🛵 Domicilios rápidos</p>
-    <h1>¡La mejor comida,<br/><span>en tu puerta! 🍔</span></h1>
-    <p class="hero-sub">Hamburguesas, pizzas, pollos y más. Pide fácil por WhatsApp y recíbelo en casa.</p>
+    <h1>¡La mejor comida,<br/><span>en tu puerta! 🌭</span></h1>
+    <p class="hero-sub">Perros calientes, salchipapas, hamburguesas y más. Pide fácil por WhatsApp y recíbelo en casa.</p>
     <div class="hero-btns">
       <button class="hero-btn" onclick="scrollToCatalog()">Ver menú <i class="fas fa-arrow-down"></i></button>
       <a class="hero-btn-wa" href="https://wa.me/573136918054?text=Hola!%20Quiero%20hacer%20un%20pedido." target="_blank">
@@ -64,7 +94,7 @@
       </a>
     </div>
   </div>
-  <div class="hero-img-area">🍔🍕🍗</div>
+  <div class="hero-img-area">🌭🍟🍔</div>
 </section>
 
 <!-- BANNER INFO -->
@@ -110,7 +140,7 @@
     <div class="footer-contact">
       <h4>Contacto</h4>
       <p><i class="fab fa-whatsapp"></i> 3136918054</p>
-      <p><i class="fas fa-clock"></i> Horario: según disponibilidad</p>
+      <p><i class="fas fa-clock"></i> <span id="footer-schedule">Horario: según disponibilidad</span></p>
       <p><i class="fas fa-motorcycle"></i> Domicilios disponibles</p>
     </div>
   </div>

@@ -94,6 +94,28 @@
     <div id="tab-settings" class="admin-tab" style="display:none;">
       <div class="settings-grid">
         <div class="settings-card">
+          <h3><i class="fas fa-clock"></i> Horario de Atención</h3>
+          <p style="font-size:.82rem;color:var(--gray);margin-bottom:12px;">Este horario aparece en la barra superior de la página y en el footer para todos los clientes.</p>
+          <div class="form-row">
+            <label>Texto del horario</label>
+            <input type="text" id="s-schedule" placeholder="Ej: Lun–Sáb 11am–10pm · Dom 12pm–8pm" />
+          </div>
+          <div class="form-row" style="margin-top:4px;">
+            <label>Estado actual</label>
+            <div style="display:flex;gap:10px;margin-top:6px;">
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:700;font-size:.88rem;">
+                <input type="radio" name="s-status" value="abierto" id="s-open" checked />
+                <span style="color:#27ae60;">🟢 Abierto</span>
+              </label>
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-weight:700;font-size:.88rem;">
+                <input type="radio" name="s-status" value="cerrado" id="s-closed" />
+                <span style="color:#e74c3c;">🔴 Cerrado</span>
+              </label>
+            </div>
+          </div>
+          <button class="btn-primary-full" onclick="saveSchedule()" style="margin-top:10px;"><i class="fas fa-save"></i> Guardar horario</button>
+        </div>
+        <div class="settings-card">
           <h3><i class="fas fa-image"></i> Logo de la tienda</h3>
           <div class="logo-preview" id="logo-preview-admin"></div>
           <div class="form-row" style="margin-top:10px;">
