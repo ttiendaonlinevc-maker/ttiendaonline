@@ -44,9 +44,12 @@ img{max-width:100%;display:block}
 #main-header{position:sticky;top:0;z-index:100;background:var(--white);box-shadow:0 2px 20px rgba(255,107,0,.12);border-bottom:2px solid var(--border)}
 .header-top{display:flex;align-items:center;gap:16px;padding:12px 24px;max-width:1300px;margin:0 auto}
 .logo-area{display:flex;align-items:center;gap:10px;cursor:pointer;flex-shrink:0}
-#logo-display img{height:80px;width:auto;max-width:160px;object-fit:contain;border-radius:10px;display:block}
-.logo-img{height:80px;width:auto;max-width:160px;object-fit:contain;border-radius:10px;display:block}
+#logo-display img{height:72px;width:auto;max-width:150px;object-fit:contain;border-radius:10px;display:block}
+.logo-img{height:72px;width:auto;max-width:150px;object-fit:contain;border-radius:10px;display:block}
 .logo-default{display:none}
+.logo-text-fallback{flex-direction:column;align-items:flex-start;line-height:1.1}
+.logo-fallback-title{font-family:var(--font-display);font-size:1.6rem;color:var(--primary);letter-spacing:.5px;font-weight:900}
+.logo-fallback-sub{font-family:var(--font-display);font-size:1rem;color:var(--secondary)}
 .store-name{display:flex;flex-direction:column;line-height:1.1}
 .store-title{font-family:var(--font-display);font-size:1.3rem;color:var(--primary);letter-spacing:.5px}
 .store-subtitle{font-family:var(--font-display);font-size:.95rem;color:var(--secondary)}
@@ -329,7 +332,9 @@ footer{background:var(--secondary);color:#ccc;margin-top:60px}
   .hero-img-area{font-size:3rem}
 }
 @media(max-width:640px){
-  .header-top{padding:12px 14px;gap:10px}
+  .header-top{padding:10px 12px;gap:8px}
+  .logo-img{height:52px;max-width:110px}
+  #logo-display img{height:52px;max-width:110px}
   .store-name{display:none}
   .header-search{max-width:100%}
   .btn-user span{display:none}
